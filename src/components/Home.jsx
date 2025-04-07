@@ -4,9 +4,20 @@ export const Home = () => {
     const [count, setCount] = useState(0)
     const [buying, setBuying] = useState(false)
     const [total, setTotal] = useState(0)
+    const [products, setProducts] = useState()
     const buy = ()=>{
         setBuying(true)
         alert('Gracias por tu compra.')
+    }
+
+    const getUsers = async()=>{
+        //Consultar al API
+        //1ra forma utilizando Fetch (Puentes de conexion entre front y back)
+        const response = await fetch('https://fakestoreapi.com/products')
+        console.log(response)
+        const results  = await response.json()
+        console.log(results)
+        //2da forma utilizando Axios
     }
 
     useEffect(() => {
@@ -26,17 +37,24 @@ export const Home = () => {
     //Arreglo de dependencias
 
     useEffect(() => { //Efecto secundario
-        //alert ('Cargando datos desde la BD')
+
+        //Consultar a la API
+        getUsers()
+
         setTimeout(() => {
             //En la BD ya hay 500 ventas
             setCount(500)
-        }, 5000);
+        }, 1500);
     }, []) //Si [] esta vacio, solo se ejecuta 1 vez (Al cargar el componente)
 
 return (
     <div>
         <span>Ventas totales: {count}</span>
+        <br />
         <span>Total vendido: {total}</span>
+        <br /><br />
+        <button>Obtener mas productos</button>
+        <br /><br />
         <h2>Contador de ventas.</h2>
         <table>
             <thead>
